@@ -9,7 +9,7 @@ spec:
   destination:
     namespace: openshift-gitops
     server: https://kubernetes.default.svc
-  project: 3-application
+  project: default
   source:
     helm:
       parameters:
