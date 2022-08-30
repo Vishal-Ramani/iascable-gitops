@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: openshift-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: openshift-gitops
+    server: https://kubernetes.default.svc
+  project: 3-application
+  source:
+    helm:
+      parameters:
+        - name: replicaCount
+          value: "2"
+      valueFiles:
+      - values.yaml
+    repoURL: https://github.com/argoproj/argocd-example-apps
+    path: helm-guestbook
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
